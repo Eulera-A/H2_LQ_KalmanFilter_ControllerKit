@@ -20,15 +20,11 @@ clc
 clear all
 
 %% obtaining dimensions:
-num_dist
-q 
-
+num_dist = dim(B1,2);
 dim_zp = dim(A,1);
-row_B1
+row_B1 = dim(B1,1);
 
-%% setting up the output feedback:
-
-
+%% setting up the closed-loop state-space:
 
 
 sys_A = [A           -B2*KH2;
@@ -44,11 +40,11 @@ sys_C2 = [C2 zeros(row_C2,col_C2);
       
 sys_D = [D21;
          zeros(size(D21))]; 
- 
+
+%% obtaining state space:
 sys_ofb = ss(sys_A,sys_B,sys_C2,sys_D);   
 
       
-
 nt=length(time);
 
 % assuming each noise dim 1 here
@@ -57,8 +53,8 @@ v2=randn(nt,1)*sqrt(1);
 //v3 = randn(nt,1)*sqrt(1);
 
 
+%% specifiy dimensionalities if the plant is augmented that absorbs disturbance states
 dim_weights = dim_W1+dim_W_dist+dim_eta;
-
 dim_z_aug = dim_zp+dim_weights;
 
 %% setting up your initial condition. default is at rest:
