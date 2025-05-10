@@ -1,17 +1,19 @@
-function F_int = Element_Interval_Force_Vector(xI,r,actuator)
-% THIS FUNCITON COMPUTES spatial vector at [r - Delta/2, r+ Delta/2].
+function F_int = Element_Interval_Force_Vector(xI,r,width)
+% THIS FUNCITON COMPUTES impulse type force vector applied at [r - width/2, r+ width/2].
 % Used for control and disturbance forces: Br and Bd
 
 % INPUTS: 
-%   xI = initial nodal coordinates
-%   E0, alpha = material properties
-%
+% xI: element node 
+% r: delta-function location 
+% width: the pseudo width of desired impulse 
+
 % OUTPUT
 %   F_int
+
 F_int = zeros(4,length(r));
 
-r_up = r+actuator/2;
-r_lo = r-actuator/2;
+r_up = r+width/2;
+r_lo = r-width/2;
 
 if (r_up <= xI(2) && r_up >= xI(1)) || ( r_lo >= xI(1) && r_lo <= xI(2))
     
@@ -19,7 +21,7 @@ le = xI(2)-xI(1);
 
 xmid = (xI(2)+xI(1))/2; % mid-point between element nodes
    
-%heavi = @(x,r) (1/actuator)*(heaviside(x-(r_lo))-heaviside(x-(r_up)));
+%heavi = @(x,r) (1/width)*(heaviside(x-(r_lo))-heaviside(x-(r_up)));
 
 %     Phi_1 = @(x)  1-3.*((x/le).^2)+2*((x/le).^3);
 %     
@@ -29,7 +31,6 @@ xmid = (xI(2)+xI(1))/2; % mid-point between element nodes
 %     
 %     Phi_4 = @(x) -le*((x/le)^2)+le*((x/le)^3);
     
-    %zi = ((2/le)*(x-xmid)); z transform
     
 %     Ne_1 = @(x) (1/4)*(1-((2/le).*(x-xmid))).^2.*(2+((2/le).*(x-xmid)));
 %     Ne_2 = @(x) (1/4)*(1+((2/le).*(x-xmid))).^2.*(2-((2/le).*(x-xmid)));
@@ -43,18 +44,18 @@ xmid = (xI(2)+xI(1))/2; % mid-point between element nodes
     Ne_4 = @(z) (le/8)*(1+z).^2.*(z-1);
 
 
-%% projecting br(x) onto sin(npix/L)./sqrt(M) element_wise
+%% projecting onto sin(npix/L)./sqrt(M) basis element_wise
 
 for j = 1:length(r)
 r_z = ((2/le)*(r(j)-xmid)); % transform r into local coord.
 %br_n = @(x) heavi(x,r_z);
 
-rz_lower = max((r_z-(actuator/2)),-1);
-rz_upper = min((r_z+(actuator/2)),1);
+rz_lower = max((r_z-(width/2)),-1);
+rz_upper = min((r_z+(width/2)),1);
 
 
 
-br_n = 1/actuator;
+br_n = 1/width;
 
 %br_0 = 0; % 0 applied moment on theta_1, theta_2
 

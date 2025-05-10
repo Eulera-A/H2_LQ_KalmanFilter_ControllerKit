@@ -53,12 +53,12 @@ v2=randn(nt,1)*sqrt(1);
 //v3 = randn(nt,1)*sqrt(1);
 
 
-%% specifiy dimensionalities if the plant is augmented that absorbs disturbance states
-dim_weights = dim_W1+dim_W_dist+dim_eta;
-dim_z_aug = dim_zp+dim_weights;
+%% specifiy dimensionalities of the plant to be controlled:
+%% dim_weights = dim_W1+dim_W_dist+dim_eta;
+dim_plant = dim_zp;
 
 %% setting up your initial condition. default is at rest:
-z0=[zeros(dim_z_aug,1);zeros(dim_z_aug,1)];   
+z0=[zeros(dim_plant,1);zeros(dim_plant,1)];   
 
 % solving ode using lsim
 [y,t,z]=lsim(sys_ofb,[v1 v2],time,z0);

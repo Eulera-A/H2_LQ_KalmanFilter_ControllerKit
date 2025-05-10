@@ -1,6 +1,6 @@
 function Me = ElementMassMatrix(xI,rho)
 % THIS FUNCITON COMPUTES Me, THE ELEMENT Mass MATRIX:
-% Working now :)!!
+
 
 
 %   xI = initial nodal coordinates

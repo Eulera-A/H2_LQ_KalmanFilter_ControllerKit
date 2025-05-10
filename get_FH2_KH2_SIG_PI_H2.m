@@ -1,10 +1,9 @@
 function [FH2,KH2,SIG,PI,cost] = get_FH2_KH2_SIG_PI_H2(A,B1,B2,C2,D12,D21,C1,Re,Ru,S_w,Eo_H2)
 %% Jul 31, 2021
 %% By Owner of Eulera-A github
-%% Project: solver for Optimal H2 Output Feedback Controller KH2 and Estimator FH2
+%% Project: solver for Optimal Controller KH2 and Estimator FH2
 %% for the system: 
 %% (A,B2) is stabilizable, (A,C2) is detectable,
-%% D12*D12 is coercive, 
 %% (Ac,C1c) is detectable, (Ae,B1e) is stabilizable
 %% The computed solution is the closed-loop feedback control solution that minimizes the norm of the disturbance response while minimizes the estimation error
 %% *note: index 2 for control, index 1 for estimation (dual problem); 
